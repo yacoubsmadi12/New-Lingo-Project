@@ -1,0 +1,98 @@
+Create a complete, modern, mobile-responsive web application called **Zlingo** using Replit. Zlingo is a fun, gamified vocabulary learning platform for employees of a telecom operator (e.g., Zain Jordan) to master work-related terms across departments: Marketing, Sales, Engineering, Legal, and HR.
+
+### Core Requirements:
+
+1. **Tech Stack (must work well in Replit)**:
+   - Backend: Node.js + Express.js
+   - Frontend: React.js (with Vite or Create React App – prefer Vite for faster setup)
+   - Database: SQLite (using sqlite3 package) – store users, vocabulary terms, quiz scores, streaks, badges
+   - Real-time (for duels): Socket.io
+   - Styling: Tailwind CSS (or Bootstrap if easier)
+   - Additional libraries: react-confetti (for win animations), chart.js (for progress visuals), bcrypt (password hashing), jsonwebtoken (JWT auth)
+
+2. **User Authentication**:
+   - Simple email + password signup / login
+   - Store user data: email, hashed password, department preference, points, streak, badges
+   - JWT-based authentication (protect routes)
+   - Optional: Google OAuth if easy to implement
+
+3. **Vocabulary Database**:
+   - Pre-populate with 25–30 terms per department (at least 5–7 per department to start)
+   - Each term has: term (string), definition (string), example (string), department (string)
+   - Example terms (include ALL of these + add more if needed):
+     - Marketing: ARPU, Churn, 5G, SAC, CLV, Bundling, Digital Channels
+     - Sales: ARPU, SAC, LTV/CLV, Activation, Net Additions, MOU, DOU, Quota, Win-Back
+     - Engineering: KPI, CQI, PRB Utilization, RSRP, RSRQ, SINR, Handover Success Rate, Throughput, Latency, VoLTE, VoNR
+     - Legal: Roaming Agreements, Interconnection Agreement, Spectrum License, Net Neutrality, GDPR, SLA, NRA
+     - HR: KPI, Onboarding, Attrition, Turnover Rate, Performance Management, PIP, Talent Acquisition, Employee Engagement
+   - Admin route (password-protected) to add/edit terms
+
+4. **Main Pages & Navigation**:
+   - Welcome / Login page
+   - Dashboard: Shows user stats (points, current streak, badges, progress rings or heatmap for departments)
+   - Department Selection: Buttons for Marketing, Sales, Engineering, Legal, HR, All Departments
+   - Quiz Center: Choose quiz mode
+   - Flashcards page: Swipeable cards (Tinder-style)
+   - Leaderboard: Top scorers (anonymous or team names like "Amman Champs")
+   - Profile: View badges, streak, edit department preference
+
+5. **Quiz Modes (make them fun and gamified)**:
+   - **Daily Vocab Battle** (default/home quiz):
+     - 3 questions per day
+     - 60-second timer per question
+     - Types: Multiple choice, fill-in-the-blank, match term-definition, scenario-based
+     - Points + streak system (7-day streak → special badge)
+     - Confetti + sound effects on correct answers
+     - Leaderboard updates in real-time
+   - **Scenario Escape Room**:
+     - 4–5 question story-based quiz (e.g., "Competitor launched cheap plan → protect ARPU & reduce Churn")
+     - Narrative + dramatic animations
+   - **Term Duel**:
+     - 5-question head-to-head (vs AI or real-time vs another user via Socket.io)
+     - First correct answer gets point
+     - Funny memes/GIFs on wrong answers
+   - **Emoji / Meme Translator**:
+     - Match emoji combos to terms (e.g., 📉😭 = Churn, 💰👤 = ARPU)
+   - **Progressive Difficulty**:
+     - Level 1: Definitions
+     - Level 2: Usage in sentences
+     - Level 3: Scenarios
+     - Level 4: Cross-department mix
+
+6. **Gamification Features**:
+   - Points system
+   - Badges (e.g., "ARPU Master", "Churn Slayer", "5G Guru", "Streak Legend")
+   - Daily login bonus
+   - Confetti explosions, success sounds, funny fail animations
+   - Department strength heatmap/chart
+   - Shareable score screenshots
+
+7. **UI/UX Design**:
+   - Mobile-responsive
+   - Telecom theme: Use Zain-inspired colors (red #ED1C24, green #00A859, white, dark gray)
+   - Modern, clean, fun interface with icons (phones, networks, trophies)
+   - Animations: confetti, shake on wrong answer, swipe gestures for flashcards
+   - Push notifications (browser) for daily quiz reminder
+
+8. **Additional Features**:
+   - Flashcards: Swipe right (known), left (learn more) → shows definition + example
+   - Progress tracking: Save quiz history, show weakest departments
+   - Browser notifications for daily quiz
+   - Error handling & loading states
+
+9. **Project Structure** (suggested):
+   - /server: Express backend, routes, database setup
+   - /client: React frontend (Vite)
+   - /db: SQLite file
+   - Seed script to populate vocabulary
+
+10. **Replit Setup Commands**:
+    Provide all necessary npm install commands
+    Instructions to run backend + frontend together (e.g., concurrent dev servers)
+
+Please generate the **complete code structure** with:
+- All necessary files (server.js, App.jsx, components, routes, database schema, seed data)
+- Ready-to-run package.json
+- Clear instructions for running in Replit (e.g., npm run dev)
+
+Make it engaging, fun, and professional — perfect for telecom employees to learn vocabulary quickly and enjoyably!

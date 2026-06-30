@@ -1,0 +1,125 @@
+The system will be deployed inside a company environment and must integrate with the company Active Directory (LDAP).
+
+Requirements:
+
+Authentication & Login (LDAP Only):
+
+Remove any existing user registration or sign-up functionality.
+
+Replace it with a single login screen that asks for:
+
+Employee ID
+
+Password
+
+Authenticate users exclusively via the company Active Directory using LDAP.
+
+Do not store user passwords in the database.
+
+On first successful login:
+
+Auto-create the user record in the local database.
+
+Fetch and store (read-only):
+
+Employee ID
+
+Full Name
+
+Department
+
+Email (if available from LDAP)
+
+User Roles:
+
+Support two roles:
+
+Employee (default) – authenticated via LDAP.
+
+Admin – defined by LDAP group membership (e.g. Learning_Admins group).
+
+Role must be assigned automatically based on LDAP group.
+
+Admin Panel (Separate Page):
+
+Create a dedicated Admin Dashboard accessible only to admin users.
+
+Admin dashboard must allow:
+
+Viewing all employees.
+
+Viewing employee performance:
+
+Quiz scores
+
+Progress per department
+
+Completion rate
+
+Assigning and managing:
+
+Badges
+
+Rewards / prizes
+
+Manually granting badges or rewards to employees.
+
+LDAP Integration (Admin Control):
+
+Add an Admin → LDAP Integration section.
+
+Implement functionality to:
+
+Connect to LDAP controller.
+
+Fetch all users from LDAP.
+
+Verify and display:
+
+Number of users fetched.
+
+Sample list of usernames / employee IDs.
+
+Validate that LDAP sync is successful.
+
+Show clear success / error messages if:
+
+LDAP connection fails
+
+Credentials are incorrect
+
+No users are returned
+
+Security & Best Practices:
+
+Use environment variables for:
+
+LDAP server URL
+
+Bind DN
+
+Bind password
+
+Base DN
+
+Enforce session-based authentication.
+
+Protect admin routes with middleware.
+
+Log authentication and LDAP sync errors (without logging passwords).
+
+UI Notes:
+
+Keep employee UI simple (login → dashboard → learning → quizzes).
+
+Admin UI should be clearly separated and not visible to normal users.
+
+Tech Notes (if applicable):
+
+Backend: Node.js (Express)
+
+Authentication: LDAP (e.g. ldapjs or similar)
+
+Database: existing project DB
+
+No OAuth, no external identity providers.
