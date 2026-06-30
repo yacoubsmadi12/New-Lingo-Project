@@ -1,0 +1,83 @@
+root@noccbt:~/New-Lingo-Project#
+root@noccbt:~/New-Lingo-Project# sudo -u postgres psql -d zlingo -c "GRANT ALL PRIVILEGES ON TABLE session TO zlingo;"
+
+pm2 restart zlingo
+could not change directory to "/root/New-Lingo-Project": Permission denied
+GRANT
+Use --update-env to update environment variables
+[PM2] Applying action restartProcessId on app [zlingo](ids: [ 0 ])
+[PM2] [zlingo](0) ✓
+┌────┬───────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name      │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼───────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ zlingo    │ fork     │ 2    │ online    │ 0%       │ 20.0mb   │
+└────┴───────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+host metrics | cpu: 8.7% | ram usage: 16.4% | lo: ⇓ 0.001mb/s ⇑ 0.001mb/s | enp1s0: ⇓ 0.001mb/s ⇑ 0.001mb/s |
+root@noccbt:~/New-Lingo-Project#
+root@noccbt:~/New-Lingo-Project#
+root@noccbt:~/New-Lingo-Project#
+root@noccbt:~/New-Lingo-Project# sed -i 's/enabled: !!user && isEngineering,/enabled: !!user,/' client/src/pages/Dashboard.tsx
+sed -i 's/{isEngineering \&\& dailyContent?.term \&\& (/{dailyContent?.term \&\& (/' client/src/pages/Dashboard.tsx
+sed -i 's/<EngineeringSpotlight term={dailyContent.term} quiz={dailyContent.quiz || \[\]} \/>/<DepartmentSpotlight term={dailyContent.term} quiz={dailyContent.quiz || []} department={user.department} \/>/' client/src/pages/Dashboard.tsx
+sed -i 's/function EngineeringSpotlight({ term, quiz }/function DepartmentSpotlight({ term, quiz, department }/' client/src/pages/Dashboard.tsx
+sed -i "s/Engineering · Word of the Day/{department} · Word of the Day/" client/src/pages/Dashboard.tsx
+# Patch 2: Backend — fallback to seeded data when AI key is missing
+python3 - << 'PYEOF'
+import re
+with open('server/routes.ts', 'r') as f:
+    content = f.read()
+old = '''    } catch (error) {
+      console.error("Daily Content Gen Error:", error);
+      res.status(500).json({ message: "Failed to generate daily content" });
+    }
+  });'''
+new = '''    } catch (error) {
+      console.error("Daily Content Gen Error:", error);
+      try {
+        const allTerms = await storage.getTerms(department);
+        if (allTerms.length > 0) {
+          const today2 = new Date().toISOString().split('T')[0];
+          let existingDaily2 = await storage.getDailyContent(department, today2);
+          if (!existingDaily2) {
+            await storage.createDailyContent({ department, date: today2, termId: allTerms[0].id, quizData: [] });
+            existingDaily2 = await storage.getDailyContent(department, today2);
+          }
+          return res.json({ term: allTerms[0], quiz: existingDaily2?.quizData || [] });
+        }
+tsx script/build.ts && pm2 restart zlingoiled to generate daily content" }); }
+Done patching routes.ts
+building client...
+vite v7.3.6 building client environment for production...
+✓ 3043 modules transformed.
+../dist/public/index.html                                  2.01 kB │ gzip:   0.76 kB
+../dist/public/assets/avatar-sales-vaNZQNhk.png        1,085.05 kB
+../dist/public/assets/avatar-compliance-DRbenSij.png   1,154.80 kB
+../dist/public/assets/avatar-marketing-CVx0yXqw.png    1,211.85 kB
+../dist/public/assets/avatar-legal-BggWeiJ2.png        1,246.95 kB
+../dist/public/assets/avatar-hr-6BnkiqOA.png           1,296.70 kB
+../dist/public/assets/avatar-finance-dmMzVoMQ.png      1,428.69 kB
+../dist/public/assets/avatar-engineering-DhZlESgr.png  1,450.05 kB
+../dist/public/assets/avatar-tech-BG_jQg1p.png         1,836.21 kB
+../dist/public/assets/index-Dw8LMknE.css                 167.65 kB │ gzip:  25.65 kB
+../dist/public/assets/index-DOIKZtDW.js                1,372.15 kB │ gzip: 402.47 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 15.59s
+building server...
+
+  dist/index.cjs  1.3mb ⚠️
+
+⚡ Done in 387ms
+Use --update-env to update environment variables
+[PM2] Applying action restartProcessId on app [zlingo](ids: [ 0 ])
+[PM2] [zlingo](0) ✓
+┌────┬───────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name      │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼───────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 0  │ zlingo    │ fork     │ 3    │ online    │ 0%       │ 17.1mb   │
+└────┴───────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+host metrics | cpu: 13% | ram usage: 20.1% | enp1s0: ⇓ 0.001mb/s ⇑ 0.002mb/s |
+root@noccbt:~/New-Lingo-Project#
