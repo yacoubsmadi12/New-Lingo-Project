@@ -72,7 +72,7 @@ export function setupAuth(app: Express) {
     store: storage.sessionStore,
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      secure: app.get("env") === "production",
+      secure: process.env.COOKIE_SECURE === "true",
     },
   };
 
