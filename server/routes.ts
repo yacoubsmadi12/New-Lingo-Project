@@ -200,6 +200,27 @@ export async function registerRoutes(
 
     } catch (error) {
       console.error("Daily Content Gen Error:", error);
+      // Fallback: return seeded term + quiz for this department
+      try {
+        const allTerms = await storage.getTerms(department);
+        if (allTerms.length > 0) {
+          const today = new Date().toISOString().split('T')[0];
+          // Save a daily content record so future requests are served from cache
+          let existingDaily = await storage.getDailyContent(department, today);
+          if (!existingDaily) {
+            await storage.createDailyContent({
+              department,
+              date: today,
+              termId: allTerms[0].id,
+              quizData: [],
+            });
+            existingDaily = await storage.getDailyContent(department, today);
+          }
+          return res.json({ term: allTerms[0], quiz: existingDaily?.quizData || [] });
+        }
+      } catch (fallbackErr) {
+        console.error("Fallback error:", fallbackErr);
+      }
       res.status(500).json({ message: "Failed to generate daily content" });
     }
   });

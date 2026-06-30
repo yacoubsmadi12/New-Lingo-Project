@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { apiRequest } from "@/lib/queryClient";
 
-function EngineeringSpotlight({ term, quiz }: { term: any; quiz: any[] }) {
+function DepartmentSpotlight({ term, quiz, department }: { term: any; quiz: any[]; department: string }) {
   const [quizStep, setQuizStep] = useState<"word" | "quiz" | "done">("word");
   const [selected, setSelected] = useState<string | null>(null);
   const [correct, setCorrect] = useState<boolean | null>(null);
@@ -52,7 +52,7 @@ function EngineeringSpotlight({ term, quiz }: { term: any; quiz: any[] }) {
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold"
             style={{ background: "rgba(249,115,22,0.25)", border: "1px solid rgba(249,115,22,0.4)" }}>
             <Code2 className="w-3 h-3" style={{ color: "#f97316" }} />
-            <span style={{ color: "#f97316" }}>Engineering · Word of the Day</span>
+            <span style={{ color: "#f97316" }}>{department} · Word of the Day</span>
           </div>
         </div>
 
@@ -136,11 +136,9 @@ export default function Dashboard() {
     enabled: user?.role === "admin"
   });
 
-  const isEngineering = user?.department === "Engineering";
-
   const { data: dailyContent } = useQuery<{ term: any; quiz: any[] }>({
     queryKey: ["/api/ai/daily-content"],
-    enabled: !!user && isEngineering,
+    enabled: !!user,
     retry: false,
   });
 
@@ -247,8 +245,7 @@ export default function Dashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <h1 className="text-2xl font-display font-bold">
-                {isEngineering ? "👋 Welcome, " : "Hello, "}
-                <span className="text-primary">{user.fullName || user.username}</span>
+                👋 Welcome, <span className="text-primary">{user.fullName || user.username}</span>
               </h1>
               <p className="text-muted-foreground text-sm mt-0.5">{user.department} · Ready to learn today?</p>
             </div>
@@ -312,9 +309,9 @@ export default function Dashboard() {
             </Dialog>
           </div>
 
-          {/* Engineering: Word of the Day Spotlight */}
-          {isEngineering && dailyContent?.term && (
-            <EngineeringSpotlight term={dailyContent.term} quiz={dailyContent.quiz || []} />
+          {/* Word of the Day Spotlight */}
+          {dailyContent?.term && (
+            <DepartmentSpotlight term={dailyContent.term} quiz={dailyContent.quiz || []} department={user.department} />
           )}
 
           {/* Stats */}
