@@ -29,6 +29,8 @@ export default function QuizRunner() {
   const [gameOver, setGameOver] = useState(false);
   const [timeLeft, setTimeLeft] = useState(mode === 'word-rush' ? 60 : 180);
   const [isPaused, setIsPaused] = useState(false);
+  const isInfinite = ['word-rush', 'survival'].includes(mode || "");
+  const maxQuestions = mode === 'boss-fight' ? 10 : (isInfinite ? 50 : 5);
 
   // Timer logic for Word Rush
   useEffect(() => {
