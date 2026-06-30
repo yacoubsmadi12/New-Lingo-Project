@@ -42,7 +42,7 @@ export default function DailyMix() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(180);
   const [result, setResult] = useState<{ newStreak: number; bonusXP: number; totalXP: number; newBadges: string[] } | null>(null);
 
   const { data: streakStatus, isLoading: isLoadingStatus } = useQuery<StreakStatus>({
@@ -85,7 +85,7 @@ export default function DailyMix() {
       setQuestions(shuffled);
       setCurrentIndex(0);
       setScore(0);
-      setTimeLeft(120);
+      setTimeLeft(180);
       setPhase("playing");
     } catch (err) {
       toast({ title: "Error", description: "Failed to load daily mix", variant: "destructive" });
@@ -116,7 +116,7 @@ export default function DailyMix() {
         setCurrentIndex(i => i + 1);
         setSelectedOption(null);
         setIsCorrect(null);
-        setTimeLeft(120);
+        setTimeLeft(180);
       }
     }, 2000);
   };
@@ -398,7 +398,7 @@ export default function DailyMix() {
               )}>
                 {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
               </div>
-              <Progress value={(timeLeft / 120) * 100} className="w-20 h-2" />
+              <Progress value={(timeLeft / 180) * 100} className="w-20 h-2" />
             </div>
 
             <div className="text-right">

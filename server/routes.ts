@@ -772,7 +772,7 @@ export async function registerRoutes(
       const user = req.user as User;
       const { difficulty, aiPersonality } = req.body;
       
-      const questionCount = 10;
+      const questionCount = 5;
       const difficultyPrompt = difficulty === "easy" 
         ? "basic, straightforward questions" 
         : difficulty === "hard" 

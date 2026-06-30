@@ -363,7 +363,7 @@ export default function Dashboard() {
                 <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <BookOpen className="w-5 h-5" />
                 </div>
-                <h3 className="text-base font-bold mb-1 group-hover:text-primary transition-colors">Flashcards</h3>
+                <h3 className="text-base font-bold mb-1 group-hover:text-primary transition-colors">Learn</h3>
                 <p className="text-muted-foreground text-sm">Review terms for your department.</p>
               </div>
             </Link>
@@ -373,7 +373,7 @@ export default function Dashboard() {
                 <div className="w-10 h-10 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <Trophy className="w-5 h-5" />
                 </div>
-                <h3 className="text-base font-bold mb-1 group-hover:text-secondary transition-colors">Play Games</h3>
+                <h3 className="text-base font-bold mb-1 group-hover:text-secondary transition-colors">Games</h3>
                 <p className="text-muted-foreground text-sm">Term Duel vs AI or Crossword challenge.</p>
               </div>
             </Link>

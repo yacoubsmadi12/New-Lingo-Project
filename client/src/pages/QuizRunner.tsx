@@ -286,7 +286,7 @@ export default function QuizRunner() {
             <div className="flex items-center gap-4 text-right">
               <div>
                 <span className="text-xs font-bold text-muted-foreground uppercase">Progress</span>
-                <div className="text-xl font-bold">{questionCount + 1}<span className="text-sm opacity-50">/50</span></div>
+                <div className="text-xl font-bold">{questionCount + 1}<span className="text-sm opacity-50">/{maxQuestions}</span></div>
               </div>
               {mode === 'survival' && (
                  <div className="flex gap-1">

@@ -122,7 +122,7 @@ export default function TermDuel() {
   const [badgesEarned, setBadgesEarned] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const timeLimit = 120;
+  const timeLimit = 180;
   const aiSpeed = difficulty === "easy" ? 0.3 : difficulty === "medium" ? 0.5 : 0.7;
   const currentQuestion = questions[currentIndex];
 
